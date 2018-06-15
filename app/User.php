@@ -4,7 +4,7 @@ namespace Niework;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-//use Niework\Models\Country as Country;
+use Niework\Models\Country as Country;
 
 class User extends Authenticatable
 {
