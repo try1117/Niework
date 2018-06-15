@@ -89,7 +89,7 @@
                         <div class="form-group row">
                             <label for="country" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
                             <div class="col-md-6">
-                                {!! Form::select('country_id', App\Model\Country::getCountriesList(), 0, ['class' => 'form-control ']); !!}
+                                {!! Form::select('country_id', Niework\Models\Country::getCountriesList(), 0, ['class' => 'form-control ']); !!}
                             </div>
 
                             {{--<div class="col-md-6">--}}

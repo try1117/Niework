@@ -1,6 +1,6 @@
 <?php
 
-namespace Niework\Model;
+namespace Niework\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
