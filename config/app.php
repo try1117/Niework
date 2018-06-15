@@ -160,6 +160,11 @@ return [
         Niework\Providers\EventServiceProvider::class,
         Niework\Providers\RouteServiceProvider::class,
 
+        /*
+         * Models...
+         */
+//        Niework\Models\Country::class,
+//        Niework\Models\myModel123::class,
     ],
 
     /*
