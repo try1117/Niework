@@ -77,9 +77,10 @@ class User extends Authenticatable
         return $this->birth_date;
     }
 
-    public function setBirthdate($date)
+    public function setBirthdate($dateString)
     {
-        if ($date instanceof DateTime) {
+        $date = date_create($dateString);
+        if ($date) {
             $this->birth_date = $date;
         }
     }
