@@ -3,6 +3,7 @@
 namespace Niework\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (Auth::guest()) {
+            return view('login');
+        }
+        return view('profile')->withUser(Auth::user());
     }
 }

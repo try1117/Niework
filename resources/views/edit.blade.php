@@ -8,24 +8,22 @@
                     <div class="card-header">{{__('User information')}}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('edit') }}">
+                        <form method="POST" action="{{ route('update') }}">
                             @csrf
 
                             <div class="row">
                                 <div class="col-4">
                                     <img class="" src="/avatars/{{ Auth::user()->getAvatar() }}" />
-                                    {{--<button class="btn btn-primary mt-2">Edit profile</button>--}}
-                                    {{--<a class="btn btn-primary mt-2" href="{{ route('edit') }}">{{ __('Edit profile') }}</a>--}}
-
-                                    <div class="row justify-content-center mt-2">
-                                        <form action="/profile" method="post" enctype="multipart/form-data">
-                                            @csrf
+                                    <div class="mt-3">
+                                        {{--<form action="{{ route('update_avatar') }}" method="POST" enctype="multipart/form-data">--}}
+                                            {{--@csrf--}}
                                             <div class="form-group">
                                                 <input type="file" class="form-control-file" name="avatar" id="avatarFile" aria-describedby="fileHelp">
                                                 <small id="fileHelp" class="form-text text-muted">Please upload a valid image file. Size of image should not be more than 2MB.</small>
                                             </div>
-                                        </form>
+                                        {{--</form>--}}
                                     </div>
+                                    {{--</div>--}}
                                 </div>
 
                                 <div class="col-8">
@@ -33,9 +31,9 @@
                                     <div class="form-group row">
                                         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-7">
                                             <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                                   name="name" value="{{ old('name') }}" required autofocus placeholder={{Auth::user()->getName()}}>
+                                                   name="name" value="{{ Auth::user()->getName() }}" required autofocus>
 
                                             @if ($errors->has('name'))
                                                 <span class="invalid-feedback">
@@ -46,54 +44,77 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-                                        <label class="col-md-4 col-form-label text-md-left">{{Auth::user()->getEmailAddress()}}</label>
+                                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                                        <div class="col-md-7">
+                                            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                                   name="email" value="{{ Auth::user()->getEmailAddress() }}" required>
+
+                                            @if ($errors->has('email'))
+                                                <span class="invalid-feedback">
+                                                    <strong>{{ $errors->first('email') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Registration date') }}</label>
-                                        <label class="col-md-4 col-form-label text-md-left">{{Auth::user()->getRegistrationDate()}}</label>
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                                        <div class="col-md-7">
+                                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                                   name="password">
+
+                                            @if ($errors->has('password'))
+                                                <span class="invalid-feedback">
+                                                    <strong>{{ $errors->first('password') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
 
-                                    @if (Auth::user()->birthDateSelected())
-                                        <div class="form-group row">
-                                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Date of birth') }}</label>
-                                            <label class="col-md-4 col-form-label text-md-left">{{Auth::user()->getBirthDate()}}</label>
-                                        </div>
-                                    @endif
+                                    <div class="form-group row">
+                                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
-                                    @if (Auth::user()->countrySelected())
-                                        <div class="form-group row">
-                                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
-                                            <label class="col-md-4 col-form-label text-md-left">{{Auth::user()->getCountry()}}</label>
+                                        <div class="col-md-7">
+                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
                                         </div>
-                                    @endif
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="birth_date" class="col-md-4 col-form-label text-md-right">{{ __('Date of birth') }}</label>
+
+                                        <div class="col-md-7">
+                                            <input id="birth_date" type="date" class="form-control{{ $errors->has('birth_date') ? ' is-invalid' : '' }}"
+                                                   name="birth_date" value="{{Auth::user()->getBirthDate()}}">
+
+                                            @if ($errors->has('birth_date'))
+                                                <span class="invalid-feedback">
+                                                    <strong>{{ $errors->first('birth_date') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="country" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
+                                        <div class="col-md-7">
+                                            {!! Form::select('country_id', Niework\Models\Country::getCountriesList(), Auth::user()->getCountryId(),
+                                                ['class' => 'form-control']); !!}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="row justify-content-center">
                                 <div class="btn-toolbar">
-                                    <button type="submit" class="btn btn-primary mx-2">Submit</button>
-                                    <button type="submit" class="btn btn-primary mx-2">Cancel</button>
+                                    <button type="submit" class="btn btn-success mx-2">{{ __('Save') }}</button>
+                                    <a class="btn btn-secondary mx-2" href={{ route('home') }}>{{ __('Cancel') }}</a>
                                 </div>
                             </div>
                         </form>
-                    </div>
-                </div>
-
-                {{--<div class="card">--}}
-                {{--<div class="card-header">Dashboard</div>--}}
-
-                {{--<div class="card-body">--}}
-                {{--@if (session('status'))--}}
-                {{--<div class="alert alert-success">--}}
-                {{--{{ session('status') }}--}}
-                {{--</div>--}}
-                {{--@endif--}}
-
-                {{--You are logged in!--}}
-                {{--</div>--}}
-                {{--</div>--}}
+                    </div> {{-- card body --}}
+                </div> {{-- card --}}
             </div>
         </div>
     </div>

@@ -11,9 +11,9 @@
 
                 <div class="card-body row justify-content-center">
                     <div class="btn-toolbar">
-                        <button class="btn btn-info mx-2">4Rest</button>
-                        <button class="btn btn-info mx-2">AgSocial</button>
-                        <button class="btn btn-info mx-2">VLSocial</button>
+                        <button class="btn btn-info mx-2 disabled">4Rest</button>
+                        <button class="btn btn-info mx-2 disabled">AgSocial</button>
+                        <button class="btn btn-info mx-2 disabled">VLSocial</button>
                     </div>
                 </div>
 

@@ -38,9 +38,23 @@ class User extends Authenticatable
         return $this->name;
     }
 
+    public function setName($name)
+    {
+        if (gettype($name) == "string") {
+            $this->name = $name;
+        }
+    }
+
     public function getEmailAddress()
     {
         return $this->email;
+    }
+
+    public function setEmailAddress($email)
+    {
+        if (gettype($email) == "string") {
+            $this->email = $email;
+        }
     }
 
     public function getRegistrationDateTime()
@@ -63,6 +77,13 @@ class User extends Authenticatable
         return $this->birth_date;
     }
 
+    public function setBirthdate($date)
+    {
+        if ($date instanceof DateTime) {
+            $this->birth_date = $date;
+        }
+    }
+
     public function countrySelected()
     {
         return Country::validCountryId($this->country_id);
@@ -73,8 +94,30 @@ class User extends Authenticatable
         return Country::getCountryById($this->country_id);
     }
 
+    public function getCountryId()
+    {
+        if ($this->countrySelected()) {
+            return $this->country_id;
+        }
+        return 0;
+    }
+
+    public function setCountryId($id)
+    {
+        if (gettype($id) == "integer") {
+            $this->country_id = $id;
+        }
+    }
+
     public function getAvatar()
     {
         return $this->avatar;
+    }
+
+    public function setAvatar($hash_name)
+    {
+        if (gettype($hash_name) == "string") {
+            $this->avatar = $hash_name;
+        }
     }
 }

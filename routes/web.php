@@ -26,3 +26,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/edit', 'EditProfileController@index')->name('edit');
 Route::get('/users', 'UsersController@index')->name('users');
 Route::get('/profile/{id}', 'UsersController@show')->name('profile');
+
+//Route::post('/edit', 'UserController@updateAvatar')->name('update_avatar');
+Route::post('/edit', 'UsersController@update')->name('update');
