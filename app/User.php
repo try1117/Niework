@@ -104,7 +104,7 @@ class User extends Authenticatable
 
     public function setCountryId($id)
     {
-        if (gettype($id) == "integer") {
+        if (Country::isCountryId($id)) {
             $this->country_id = $id;
         }
     }

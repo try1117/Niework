@@ -22,6 +22,11 @@ class Country extends Model
         return $id && 0 < $id && $id < sizeof(self::$list);
     }
 
+    public static function isCountryId($id)
+    {
+        return !$id || 0 <= $id && $id < sizeof(self::$list);
+    }
+
     private static $list = [
         '',
         'Afghanistan',
