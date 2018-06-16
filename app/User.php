@@ -28,6 +28,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getName()
     {
         return $this->name;
@@ -66,5 +71,10 @@ class User extends Authenticatable
     public function getCountry()
     {
         return Country::getCountryById($this->country_id);
+    }
+
+    public function getAvatar()
+    {
+        return $this->avatar;
     }
 }

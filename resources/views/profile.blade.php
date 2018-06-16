@@ -9,9 +9,11 @@
 
                 <div class=" card-body row">
                     <div class="col-4">
-                        <img class="" src="/avatars/{{ Auth::user()->getAvatar() }}" />
+                        <img class="" src="/avatars/{{ $user->getAvatar() }}" />
                         {{--<button class="btn btn-primary mt-2">Edit profile</button>--}}
-                        <a class="btn btn-primary mt-2" href="{{ route('edit') }}">{{ __('Edit profile') }}</a>
+                        @if (Auth::user() && Auth::user()->getId() == $user->getId())
+                            <a class="btn btn-primary mt-2" href="{{ route('edit') }}">{{ __('Edit profile') }}</a>
+                        @endif
 
                         {{--<div class="row justify-content-center">--}}
                             {{--<form action="/profile" method="post" enctype="multipart/form-data">--}}
@@ -28,30 +30,30 @@
                     <div class="col-8">
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-                            <label class="col-md-4 col-form-label text-md-left">{{Auth::user()->getName()}}</label>
+                            <label class="col-md-4 col-form-label text-md-left">{{$user->getName()}}</label>
                         </div>
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-                            <label class="col-md-4 col-form-label text-md-left">{{Auth::user()->getEmailAddress()}}</label>
+                            <label class="col-md-4 col-form-label text-md-left">{{$user->getEmailAddress()}}</label>
                         </div>
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Registration date') }}</label>
-                            <label class="col-md-4 col-form-label text-md-left">{{Auth::user()->getRegistrationDate()}}</label>
+                            <label class="col-md-4 col-form-label text-md-left">{{$user->getRegistrationDate()}}</label>
                         </div>
 
-                        @if (Auth::user()->birthDateSelected())
+                        @if ($user->birthDateSelected())
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Date of birth') }}</label>
-                                <label class="col-md-4 col-form-label text-md-left">{{Auth::user()->getBirthDate()}}</label>
+                                <label class="col-md-4 col-form-label text-md-left">{{$user->getBirthDate()}}</label>
                             </div>
                         @endif
 
-                        @if (Auth::user()->countrySelected())
+                        @if ($user->countrySelected())
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
-                                <label class="col-md-4 col-form-label text-md-left">{{Auth::user()->getCountry()}}</label>
+                                <label class="col-md-4 col-form-label text-md-left">{{$user->getCountry()}}</label>
                             </div>
                         @endif
                     </div>

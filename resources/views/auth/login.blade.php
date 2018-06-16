@@ -5,7 +5,19 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">{{ __('Authorization') }}</div>
+
+                <h3 class="card-title text-center mt-3 mb-1">Login with</h3>
+
+                <div class="card-body row justify-content-center">
+                    <div class="btn-toolbar">
+                        <button class="btn btn-info mx-2">4Rest</button>
+                        <button class="btn btn-info mx-2">AgSocial</button>
+                        <button class="btn btn-info mx-2">VLSocial</button>
+                    </div>
+                </div>
+
+                <h5 class="card-title text-center mt-2 mb-1">Or with email</h5>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -39,15 +51,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        {{--<div class="form-group row">--}}
+                            {{--<div class="col-md-6 offset-md-4">--}}
+                                {{--<div class="checkbox">--}}
+                                    {{--<label>--}}
+                                        {{--<input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}--}}
+                                    {{--</label>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">

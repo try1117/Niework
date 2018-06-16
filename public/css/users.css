@@ -1,0 +1,14 @@
+.avatar-container {
+    height: 20%;
+    width: 20%;
+    /*object-fit: scale-down;*/
+}
+
+.user-avatar {
+    width: 100%;
+    height: 100%;
+    /*object-fit: scale-down;*/
+    /*height: 100%;*/
+    /*width: 5%;*/
+    /*width: auto;*/
+}

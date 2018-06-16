@@ -12,9 +12,17 @@
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    if (Auth::guest()) {
+        return redirect('login');
+    }
+    return redirect('home');
 });
 
 Auth::routes();
 
+Route::resource('users', 'UsersController');
+
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/edit', 'EditProfileController@index')->name('edit');
+Route::get('/users', 'UsersController@index')->name('users');
+Route::get('/profile/{id}', 'UsersController@show')->name('profile');
