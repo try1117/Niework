@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('scripts')
+    <script src="{{ URL::asset('/js/utils.js')}}" rel="javascript" type="text/javascript"></script>
+@endpush
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -10,15 +14,15 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('update') }}">
                             @csrf
-
                             <div class="row">
                                 <div class="col-4">
-                                    <img class="" src="/avatars/{{ Auth::user()->getAvatar() }}" />
+                                    <img class="" id="avatarDisplay" src="/avatars/{{ Auth::user()->getAvatar() }}" />
                                     <div class="mt-3">
                                         {{--<form action="{{ route('update_avatar') }}" method="POST" enctype="multipart/form-data">--}}
                                             {{--@csrf--}}
                                             <div class="form-group">
-                                                <input type="file" class="form-control-file" name="avatar" id="avatarFile" aria-describedby="fileHelp">
+                                                <input type="file" class="form-control-file" name="avatar" id="avatarFile" aria-describedby="fileHelp"
+                                                       onchange="updateAvatarPreview()">
                                                 <small id="fileHelp" class="form-text text-muted">Please upload a valid image file. Size of image should not be more than 2MB.</small>
                                             </div>
                                         {{--</form>--}}
@@ -44,44 +48,6 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                                        <div class="col-md-7">
-                                            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                                   name="email" value="{{ Auth::user()->getEmailAddress() }}" required>
-
-                                            @if ($errors->has('email'))
-                                                <span class="invalid-feedback">
-                                                    <strong>{{ $errors->first('email') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                                        <div class="col-md-7">
-                                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                                   name="password">
-
-                                            @if ($errors->has('password'))
-                                                <span class="invalid-feedback">
-                                                    <strong>{{ $errors->first('password') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                                        <div class="col-md-7">
-                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
                                         <label for="birth_date" class="col-md-4 col-form-label text-md-right">{{ __('Date of birth') }}</label>
 
                                         <div class="col-md-7">
@@ -101,6 +67,64 @@
                                         <div class="col-md-7">
                                             {!! Form::select('country_id', Niework\Models\Country::getCountriesList(), Auth::user()->getCountryId(),
                                                 ['class' => 'form-control']); !!}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <h4 class="col-md-11 mt-4 mb-0 text-md-right">Change credentials</h4>
+                                        <h6 class="col-md-11 mt-0 mb-4 text-md-right">(requires your current password)</h6>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Current Password') }}</label>
+
+                                        <div class="col-md-7">
+                                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                                   name="password">
+
+                                            @if ($errors->has('password'))
+                                                <span class="invalid-feedback">
+                                                    <strong>{{ $errors->first('password') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                                        <div class="col-md-7">
+                                            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                                   name="email" value="{{ Auth::user()->getEmailAddress() }}" required>
+
+                                            @if ($errors->has('email'))
+                                                <span class="invalid-feedback">
+                                                    <strong>{{ $errors->first('email') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="new-password" class="col-md-4 col-form-label text-md-right">{{ __('New Password') }}</label>
+
+                                        <div class="col-md-7">
+                                            <input id="new-password" type="password" class="form-control{{ $errors->has('new_password') ? ' is-invalid' : '' }}"
+                                                   name="new_password">
+
+                                            @if ($errors->has('new_password'))
+                                                <span class="invalid-feedback">
+                                                    <strong>{{ $errors->first('new_password') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="new-password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                                        <div class="col-md-7">
+                                            <input id="new-password-confirm" type="password" class="form-control" name="new_password_confirmation">
                                         </div>
                                     </div>
                                 </div>

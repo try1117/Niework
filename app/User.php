@@ -5,6 +5,7 @@ namespace Niework;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Niework\Models\Country as Country;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -120,5 +121,15 @@ class User extends Authenticatable
         if (gettype($hash_name) == "string") {
             $this->avatar = $hash_name;
         }
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($pass)
+    {
+        $this->password = Hash::make($pass);
     }
 }
