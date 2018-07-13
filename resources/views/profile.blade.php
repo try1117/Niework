@@ -9,7 +9,7 @@
 
                 <div class=" card-body row">
                     <div class="col-4">
-                        <img class="" src="/avatars/{{ $user->getAvatar() }}" />
+                        <img class="" src="/avatars/{{ $user->getAvatar() }}" height="200" width="200"/>
                         {{--<button class="btn btn-primary mt-2">Edit profile</button>--}}
                         @if (Auth::user() && Auth::user()->getId() == $user->getId())
                             <a class="btn btn-primary mt-2" href="{{ route('edit') }}">{{ __('Edit profile') }}</a>
