@@ -12,24 +12,16 @@ class User extends Authenticatable
     use Notifiable;
 
     public static $defaultAvatar = 'default.jpg';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name', 'email', 'password', 'birth_date', 'country_id',
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token', 'avatar',
     ];
+
+    public function posts() {
+        return $this->hasMany('Niework\Models\Post', 'author_id', 'id');
+    }
 
     public function getId()
     {

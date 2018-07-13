@@ -166,6 +166,7 @@ return [
          */
 //        Niework\Models\Country::class,
 //        Niework\Models\myModel123::class,
+//        Niework\Models\Post::class,
     ],
 
     /*

@@ -29,3 +29,5 @@ Route::get('/profile/{id}', 'UsersController@show')->name('profile');
 
 Route::post('/edit', 'UsersController@updateAvatarPreview')->name('updateAvatarPreview');
 Route::post('/edit', 'UsersController@update')->name('update');
+
+Route::post('/createpost/{owner_id}', 'PostController@createPost')->name('createPost');

@@ -11,6 +11,7 @@ use Illuminate\Contracts\Validation\Rule;
 //use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
+use Niework\Models\Post;
 
 class UsersController extends Controller
 {
@@ -27,7 +28,12 @@ class UsersController extends Controller
     public function show($id)
     {
         if (User::find($id)) {
-            return view('profile')->withUser(User::find($id));
+            $posts = Post::all()->where('owner_id', '=', $id)->sortByDesc('created_at');
+            return view('profile', [
+                'posts' => $posts,
+                'user' => User::find($id),
+            ]);
+//            return view('profile')->withUser(User::find($id));
         }
         return back();
     }
