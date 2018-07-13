@@ -16,12 +16,6 @@ class PostController extends Controller
         $post = new Post();
         $post->body = $request['body'];
         $post->owner_id = $owner_id;
-//        $post->author_id = Auth::user()->id;
-
-        error_log("\n\n\n\n\n");
-        error_log($post);
-        error_log("\n\n\n\n\n");
-
         if (!$request->user()->posts()->save($post)) {
             // display error
         }

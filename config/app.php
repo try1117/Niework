@@ -218,6 +218,7 @@ return [
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
         'Image' => Intervention\Image\Facades\Image::class,
+        'ExternalNetwork' => Niework\Models\ExternalNetwork::class,
     ],
 
 ];

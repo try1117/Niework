@@ -11,9 +11,13 @@
 
                 <div class="card-body row justify-content-center">
                     <div class="btn-toolbar">
-                        <button class="btn btn-info mx-2 disabled">4Rest</button>
-                        <button class="btn btn-info mx-2 disabled">AgSocial</button>
-                        <button class="btn btn-info mx-2 disabled">VLSocial</button>
+                        @foreach(ExternalNetwork::all() as $external_network)
+                            <a class="btn btn-info mx-2"
+                               href={{ $external_network->url.'/api/login?service_id=niework&redirect_url='.
+                               URL::to('/').'/accept_auth_code/'.$external_network->string_id }}>
+                                {{ $external_network->caption }}
+                            </a>
+                        @endforeach
                     </div>
                 </div>
 
@@ -50,16 +54,6 @@
                                 @endif
                             </div>
                         </div>
-
-                        {{--<div class="form-group row">--}}
-                            {{--<div class="col-md-6 offset-md-4">--}}
-                                {{--<div class="checkbox">--}}
-                                    {{--<label>--}}
-                                        {{--<input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}--}}
-                                    {{--</label>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
