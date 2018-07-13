@@ -1,4 +1,4 @@
-function updateAvatarPreview()
+function updateAvatarPreview(input, imageHolder)
 {
-    alert("132123");
+    imageHolder.src = URL.createObjectURL(input.files[0]);
 }

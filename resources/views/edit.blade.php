@@ -12,19 +12,28 @@
                     <div class="card-header">{{__('User information')}}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('update') }}">
+                        <form method="POST" action="{{ route('update') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-4">
-                                    <img class="" id="avatarDisplay" src="/avatars/{{ Auth::user()->getAvatar() }}" />
+                                    <img id="avatarDisplay" src="/avatars/{{ Auth::user()->getAvatar() }}"
+                                        height="200" width="200"/>
+
                                     <div class="mt-3">
                                         {{--<form action="{{ route('update_avatar') }}" method="POST" enctype="multipart/form-data">--}}
                                             {{--@csrf--}}
-                                            <div class="form-group">
-                                                <input type="file" class="form-control-file" name="avatar" id="avatarFile" aria-describedby="fileHelp"
-                                                       onchange="updateAvatarPreview()">
-                                                <small id="fileHelp" class="form-text text-muted">Please upload a valid image file. Size of image should not be more than 2MB.</small>
-                                            </div>
+                                        <div class="form-group">
+                                            <input type="file" class="form-control-file{{ $errors->has('avatar') ? ' is-invalid' : '' }}"
+                                                   name="avatar" id="avatarFile" aria-describedby="fileHelp"
+                                                   onchange="updateAvatarPreview(this, document.getElementById('avatarDisplay'))">
+                                            <small id="fileHelp" class="form-text text-muted">Please upload a valid image file.</small>
+
+                                            @if ($errors->has('avatar'))
+                                                <span class="invalid-feedback">
+                                                    <strong>{{ $errors->first('avatar') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
                                         {{--</form>--}}
                                     </div>
                                     {{--</div>--}}

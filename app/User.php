@@ -11,13 +11,15 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public static $defaultAvatar = 'default.jpg';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'birth_date', 'country_id'
+        'name', 'email', 'password', 'birth_date', 'country_id',
     ];
 
     /**
@@ -26,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'avatar',
     ];
 
     public function getId()

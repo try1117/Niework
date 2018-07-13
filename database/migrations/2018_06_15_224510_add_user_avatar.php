@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Niework\User;
 
 class AddUserAvatar extends Migration
 {
@@ -14,7 +15,7 @@ class AddUserAvatar extends Migration
     public function up()
     {
         Schema::table('users', function($table) {
-            $table->string('avatar')->default('default.jpg');
+            $table->string('avatar')->default(User::$defaultAvatar);
         });
     }
 

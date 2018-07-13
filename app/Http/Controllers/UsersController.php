@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Validation\Rule;
 //use Illuminate\Validation\Rule;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -38,6 +40,10 @@ class UsersController extends Controller
     public function update(Request $request)
     {
         $user=Auth::user();
+        error_log("\n\n\n");
+        error_log($request);
+        error_log($request->hasFile('avatar'));
+        error_log("\n\n\n");
 
         if ($request->hasFile('avatar'))
         {
@@ -46,14 +52,19 @@ class UsersController extends Controller
             ]);
             $avatar = $request->file('avatar');
             $image = Image::make($avatar)->resize(200,200);
-            $filename=time().'.'.$avatar->getClientOriginalExtension();
-            $image->save(public_path('/avatars/'.$filename));
+            $filename=Str::random(8).'.'.$avatar->getClientOriginalExtension();
 
+            error_log($filename);
+
+            $image->save(public_path('/avatars/'.$filename));
+            if ($user->getAvatar() != User::$defaultAvatar) {
+                $oldfile_path = public_path().'/avatars/'.$user->getAvatar();
+                unlink($oldfile_path);
+            }
             $user->setAvatar($filename);
-            $user->save();
         }
 
-//        basic information
+        // basic information
         $this->validate($request, [
             'name' => 'required|string|max:30',
         ]);
@@ -62,7 +73,7 @@ class UsersController extends Controller
         $user->setBirthDate($request->birth_date);
         $user->setCountryId($request->country_id);
 
-//        change credentials
+        // change credentials
         if ($request->new_password || $request->new_password_confirmation || $request->email != $user->getEmailAddress()) {
             $this->validate($request, ['password' => 'required']);
             if (!Hash::check($request->password, $user->password)) {
@@ -88,7 +99,6 @@ class UsersController extends Controller
         $user->save();
 
 //        return back()->with('success');
-//        throwException();
         return redirect('home');
     }
 }
