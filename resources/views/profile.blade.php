@@ -51,35 +51,36 @@
 
             <div class="card mt-4">
                 <div class="card-header">Posts</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('createPost', $user->id) }}">
-                        @csrf
-                        <div class="form-group">
-                            <textarea class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                      name="body" id="create-post-textarea" rows="4"
-                                      placeholder="Feel free to share your thoughts here">
-                            </textarea>
-                            <button type="submit" class="btn btn-primary mt-2">{{ __('Create Post') }}</button>
-                        </div>
-                    </form>
-                </div>
+                @if (Auth::user())
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('createPost', $user->id) }}">
+                            @csrf
+                            <div class="form-group">
+                                <textarea class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                          name="body" id="create-post-textarea" rows="4"
+                                          placeholder="Feel free to share your thoughts here">
+                                </textarea>
+                                <button type="submit" class="btn btn-primary mt-2">{{ __('Create Post') }}</button>
+                            </div>
+                        </form>
+                    </div>
+                @endif
 
                 <ul class="list-group">
-                @foreach($posts as $post)
-                    <li class="list-group-item">
-                        <div class="card-body">
-                            <article class="post">
-                                <p>{{ $post->body }}</p>
-                                <p>Posted by
-                                    <a href={{ $post->author_id }}>{{ $post->user->name }}</a>
-                                    on
-                                    <strong>{{ $post->created_at }}</strong>
-                                </p>
-                            </article>
-                        </div>
-                    </li>
-                @endforeach
+                    @foreach($posts as $post)
+                        <li class="list-group-item">
+                            <div class="card-body">
+                                <article class="post">
+                                    <p class="text">{{ $post->body }}</p>
+                                    <p>Posted by
+                                        <a href={{ $post->author_id }}>{{ $post->user->name }}</a>
+                                        on
+                                        <strong>{{ $post->created_at }}</strong>
+                                    </p>
+                                </article>
+                            </div>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
