@@ -82,7 +82,7 @@ class ExternalAuthController extends Controller
 
     public function acceptAuthCode(Request $request, $external_id)
     {
-        $sc = ExternalSocset::where('service', $external_id)->firstOrFail();
+        $sc = ExternalNetwork::where('service', $external_id)->firstOrFail();
         $url = $sc->url;
         $client = new Client();
         $json1 = $client->post($url.'/api/token',
@@ -94,19 +94,23 @@ class ExternalAuthController extends Controller
                 'token' => $response->token]])->getBody();
             $response2 = json_decode($json2);
             if ($response2->status == 'ok'){
-                if (AuthTroughExt::where('ext_user_id', $response->user_id)->exists()){
-                    $user = AuthTroughExt::where('ext_user_id', $response->user_id)->firstOrFail()->user;
+                if (ExternalAuth::where('external_user_id', $response->user_id)->exists()){
+                    $user = ExternalAuth::where('external_user_id', $response->user_id)->firstOrFail()->user;
                 }
                 else{
                     if (User::where('email', $response2->email)->exists())
                         return 'email already exists';
-                    $user = User::create(['nickname' => $response2->login,
+                    $user = User::create([
+                        'name' => $response2->login,
                         'email' => $response2->email,
-                        'password' => Hash::make('external')]);
-                    AuthTroughExt::create(['token' => $response->token,
+                        'password' => Hash::make('external'),
+                    ]);
+                    ExternalAuth::create([
+                        'token' => $response->token,
                         'service_id' => $sc->id,
                         'user_id' => $user->id,
-                        'ext_user_id' => $response->user_id]);
+                        'external_user_id' => $response->user_id
+                    ]);
                 }
             }
             else{
