@@ -8,6 +8,7 @@ use ExternalAuth;
 use ExternalAuthCode;
 use ExternalToken;
 use ExternalNetwork;
+use GuzzleHttp\Client;
 
 class ExternalAuthController extends Controller
 {
@@ -27,7 +28,7 @@ class ExternalAuthController extends Controller
             }
         }
 
-        error_log("\n\n\n");
+        error_log("\n\n\nredirectBack\n\n\n");
         error_log($request);
         error_log("\n\n\n");
 
@@ -48,9 +49,10 @@ class ExternalAuthController extends Controller
             $user = $auth_code->user;
             $token = str_random(60);
 
-            error_log("\n\n\n");
+            error_log("\n\n\nreturnToken\n\n\n");
             error_log($request);
             error_log("\n\n\n");
+
 
             ExternalToken::create([
                 'user_id' => $user->getId(),
@@ -69,6 +71,15 @@ class ExternalAuthController extends Controller
     public function getProfile(Request $request)
     {
         $token = ExternalToken::where('service_id', $request->service_id)->where('token', $request->token)->first();
+
+        error_log("\n\n\ngetProfile\n\n\n");
+        error_log($request);
+        error_log("\n\n\n");
+
+        error_log("\n\n\ngetProfile.token\n\n\n");
+        error_log($token);
+        error_log("\n\n\n");
+
         if ($token) {
             $user = $token->user;
             return response()->json([
@@ -82,6 +93,10 @@ class ExternalAuthController extends Controller
 
     public function acceptAuthCode(Request $request, $external_id)
     {
+        error_log("\n\n\nacceptAuthCode\n\n\n");
+        error_log($request);
+        error_log("\n\n\n");
+
         $sc = ExternalNetwork::where('string_id', $external_id)->firstOrFail();
         $url = $sc->url;
         $client = new Client();
