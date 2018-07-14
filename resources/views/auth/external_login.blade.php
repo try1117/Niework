@@ -3,9 +3,19 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-header">{{ __('Authorization') }}</div>
+
+                    <h3 class="text-center mt-4">Grant access to
+                        <a href={{ $redirect_url }}>
+                            @if (ExternalNetwork::all()->where('string_id', $service_id)->first())
+                                {{ ExternalNetwork::all()->where('string_id', $service_id)->first()->caption }}
+                            @else
+                                {{ $service_id }}
+                            @endif
+                        </a>
+                    </h3>
 
                     <div class="card-body">
                         <form method="POST" action="/api/login">

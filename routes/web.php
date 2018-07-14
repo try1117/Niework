@@ -31,9 +31,9 @@ Route::post('/edit', 'UsersController@update')->name('update');
 
 Route::post('/create_post/{owner_id}', 'PostController@createPost')->name('createPost');
 
-Route::get('api/login', 'ExternalAuth@apiLogin');
-Route::post('api/login', 'ExternalAuth@redirectBack');
-Route::post('api/token', 'ExternalAuth@returnToken');
-Route::get('api/profile/{id}', 'ExternalAuth@getProfile');
+Route::get('api/login', 'ExternalAuthController@auth');
+//Route::post('api/login', 'ExternalAuthController@redirectBack');
+//Route::post('api/token', 'ExternalAuthController@returnToken');
+//Route::get('api/profile/{id}', 'ExternalAuthController@getProfile');
 
-//Route::get('accept_auth_code/{extSocset}', 'ExternalAuth@acceptAuthCode');
+//Route::get('accept_auth_code/{extSocset}', 'ExternalAuthController@acceptAuthCode');
