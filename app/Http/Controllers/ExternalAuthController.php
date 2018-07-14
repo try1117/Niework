@@ -82,7 +82,7 @@ class ExternalAuthController extends Controller
 
     public function acceptAuthCode(Request $request, $external_id)
     {
-        $sc = ExternalNetwork::where('service', $external_id)->firstOrFail();
+        $sc = ExternalNetwork::where('service_id', $external_id)->firstOrFail();
         $url = $sc->url;
         $client = new Client();
         $json1 = $client->post($url.'/api/token',
