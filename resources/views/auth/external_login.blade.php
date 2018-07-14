@@ -22,7 +22,7 @@
                             @csrf
 
                             {{ Form::hidden('service_id', $service_id) }}
-                            {{ Form::hidden('redirect_url', 'tmp') }}
+                            {{ Form::hidden('redirect_url', $redirect_url) }}
 
                             <label>{{$service_id}}</label>
                             <label>{{$redirect_url}}</label>
