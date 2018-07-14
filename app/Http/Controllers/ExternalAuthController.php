@@ -10,6 +10,7 @@ use ExternalToken;
 use ExternalNetwork;
 use GuzzleHttp\Client;
 use Niework\User;
+use Illuminate\Support\Facades\Hash;
 
 class ExternalAuthController extends Controller
 {
