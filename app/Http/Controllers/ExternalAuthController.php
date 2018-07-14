@@ -3,6 +3,8 @@
 namespace Niework\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use ExternalAuthCode;
 
 class ExternalAuthController extends Controller
 {
@@ -21,6 +23,11 @@ class ExternalAuthController extends Controller
                 return "Authentication error";
             }
         }
+
+        error_log("\n\n\n");
+        error_log($request);
+        error_log("\n\n\n");
+
         $auth_code = str_random(60);
         ExternalAuthCode::create([
             'user_id' => Auth::user()->getId(),
@@ -37,6 +44,11 @@ class ExternalAuthController extends Controller
         if ($auth_code) {
             $user = $auth_code->user;
             $token = str_random(60);
+
+            error_log("\n\n\n");
+            error_log($request);
+            error_log("\n\n\n");
+
             ExternalToken::create([
                 'user_id' => $user->getId(),
                 'service_id' => $request->service_id,

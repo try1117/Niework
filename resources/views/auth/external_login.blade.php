@@ -21,6 +21,9 @@
                         <form method="POST" action="/api/login">
                             @csrf
 
+                            {{ Form::hidden('service_id', $service_id) }}
+                            {{ Form::hidden('redirect_url', $redirect_url) }}
+
                             <div class="form-group row">
                                 <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 

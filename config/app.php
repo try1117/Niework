@@ -219,6 +219,9 @@ return [
         'Html' => 'Collective\Html\HtmlFacade',
         'Image' => Intervention\Image\Facades\Image::class,
         'ExternalNetwork' => Niework\Models\ExternalNetwork::class,
+        'ExternalAuth' => Niework\Models\ExternalAuth::class,
+        'ExternalAuthCode' => Niework\Models\ExternalAuthCode::class,
+        'ExternalToken' => Niework\Models\ExternalToken::class,
     ],
 
 ];
