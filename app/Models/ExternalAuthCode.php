@@ -4,9 +4,9 @@ namespace Niework\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ExternalAuth extends Model
+class ExternalAuthCode extends Model
 {
-    protected $table = 'external_auth';
+    protected $table = 'external_auth_codes';
 
     public function user()
     {
