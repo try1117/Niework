@@ -62,7 +62,7 @@ class ExternalAuthController extends Controller
             return response()->json([
                 'status' => 'ok',
                 'user_id' => $user->id,
-                'token' => $auth_code,
+                'token' => $token,
             ]);
         }
         return response()->json(['status' => 'error']);
