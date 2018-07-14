@@ -4,7 +4,10 @@ namespace Niework\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use ExternalAuth;
 use ExternalAuthCode;
+use ExternalToken;
+use ExternalNetwork;
 
 class ExternalAuthController extends Controller
 {
