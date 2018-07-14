@@ -15,9 +15,9 @@ class AddColumnRootCommentToPost extends Migration
      */
     public function up()
     {
-//        Schema::table('posts', function($table) {
-//            $table->integer('root_comment')->default(0);
-//        });
+        Schema::table('posts', function($table) {
+            $table->integer('root_comment')->default(0);
+        });
 //
         foreach(Post::all() as $post) {
             $post->root_comment = Comment::create([
@@ -36,9 +36,8 @@ class AddColumnRootCommentToPost extends Migration
      */
     public function down()
     {
-//        Schema::table('posts', function($table) {
-//            $table->dropcolumn('root_comment');
-//        });
-
+        Schema::table('posts', function($table) {
+            $table->dropcolumn('root_comment');
+        });
     }
 }
