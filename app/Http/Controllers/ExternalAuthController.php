@@ -9,6 +9,7 @@ use ExternalAuthCode;
 use ExternalToken;
 use ExternalNetwork;
 use GuzzleHttp\Client;
+use Niework\User;
 
 class ExternalAuthController extends Controller
 {
