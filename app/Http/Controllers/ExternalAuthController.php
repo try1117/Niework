@@ -39,7 +39,7 @@ class ExternalAuthController extends Controller
             'auth_code' => $auth_code,
         ]);
 
-        return redirect()->away($request->redirect_url.'?auth_code='.$auth_code);
+        return redirect($request->redirect_url.'?auth_code='.$auth_code);
     }
 
     public function returnToken(Request $request)
