@@ -30,6 +30,8 @@ Route::post('/edit', 'UsersController@updateAvatarPreview')->name('updateAvatarP
 Route::post('/edit', 'UsersController@update')->name('update');
 
 Route::post('/create_post/{owner_id}', 'PostController@createPost')->name('createPost');
+Route::post('/create_comment', 'CommentController@createComment')->name('createComment');
+//Route::get('/create_comment', 'CommentController@showModal')->name('createComment');
 
 Route::get('api/login', 'ExternalAuthController@auth');
 Route::post('api/login', 'ExternalAuthController@redirectBack');

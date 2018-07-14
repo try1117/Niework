@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('scripts')
+    <script src="{{ URL::asset('/js/utils.js')}}" rel="javascript" type="text/javascript"></script>
+@endpush
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -69,16 +73,7 @@
                 <ul class="list-group">
                     @foreach($posts as $post)
                         <li class="list-group-item">
-                            <div class="card-body">
-                                <article class="post">
-                                    <p class="text">{{ $post->body }}</p>
-                                    <p>Posted by
-                                        <a href={{ $post->author_id }}>{{ $post->user->name }}</a>
-                                        on
-                                        <strong>{{ $post->created_at }}</strong>
-                                    </p>
-                                </article>
-                            </div>
+                            @include("post")
                         </li>
                     @endforeach
                 </ul>
