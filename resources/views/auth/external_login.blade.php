@@ -22,7 +22,7 @@
                             @csrf
 
                             {{ Form::hidden('service_id', $service_id) }}
-                            {{ Form::hidden('redirect_url', ExternalNetwork::all()->where('string_id', $service_id)->first()->url) }}
+                            {{ Form::hidden('redirect_url', 'tmp') }}
 
                             <label>{{$service_id}}</label>
                             <label>{{$redirect_url}}</label>
