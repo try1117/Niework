@@ -19,13 +19,14 @@
                 </li>
             @endforeach
         </ul>
-
-        <form method="POST" action="{{ route('createComment') }}">
-            @csrf
-            {{ Form::hidden('user_id', Auth::user()->id) }}
-            {{ Form::hidden('parent_comment_id', $post->root_comment) }}
-            <textarea class="form-control mt-2" name="answer_body" rows="2" placeholder="Comment"></textarea>
-            <button class="btn mt-2 mr-2 float-right" type="submit">Submit</button>
-        </form>
+        @if (Auth::user())
+            <form method="POST" action="{{ route('createComment') }}">
+                @csrf
+                {{ Form::hidden('user_id', Auth::user()->id) }}
+                {{ Form::hidden('parent_comment_id', $post->root_comment) }}
+                <textarea class="form-control mt-2" name="answer_body" rows="2" placeholder="Comment"></textarea>
+                <button class="btn mt-2 mr-2 float-right" type="submit">Submit</button>
+            </form>
+        @endif
     </article>
 </div>
