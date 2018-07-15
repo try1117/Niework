@@ -60,7 +60,7 @@ class ExternalAuthController extends Controller
 
 
             ExternalToken::create([
-                'user_id' => $user->getId(),
+                'user_id' => $user->id,
                 'service_id' => $request->service_id,
                 'token' => $token,
             ]);
@@ -89,7 +89,7 @@ class ExternalAuthController extends Controller
             $user = $token->user;
             return response()->json([
                 'status' => 'ok',
-                'login' => $user->nickname,
+                'login' => $user->name,
                 'email' => $user->email
             ]);
         }
