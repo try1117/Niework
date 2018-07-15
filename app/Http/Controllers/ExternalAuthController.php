@@ -12,7 +12,7 @@ use GuzzleHttp\Client;
 use Niework\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Niework\Http\Middleware\MyDebugger;
+use MyDebugger;
 
 class ExternalAuthController extends Controller
 {
