@@ -37,6 +37,14 @@ class ExternalAuthController extends Controller
         error_log($request);
         error_log("\n\n\n");
 
+        error_log("\n\n\nAuth SUCCESS\n\n\n");
+        error_log(json_encode(['email' => $request->email, 'password' => $request->password]));
+        error_log("\n\n\n");
+
+        error_log("\n\n\nUser->id\n\n\n");
+        error_log(json_encode(['user_id' => Auth::user()->id]));
+        error_log("\n\n\n");
+
         $auth_code = str_random(60);
         ExternalAuthCode::create([
             'user_id' => Auth::user()->id,
