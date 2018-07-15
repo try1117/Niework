@@ -11,8 +11,8 @@
 
                 <div class="card-body row justify-content-center">
                     <div class="btn-toolbar">
-                        @foreach(ExternalNetwork::all() as $external_network)
-                            <a class="btn btn-info mx-2"
+                        @foreach (ExternalNetwork::all() as $external_network)
+                            <a class="btn btn-info mx-2 my-2"
                                href={{ $external_network->url.'/api/login?service_id=niework&redirect_url='.
                                URL::to('/').'/accept_auth_code/'.$external_network->string_id }}>
                                 {{ $external_network->caption }}
