@@ -28,7 +28,7 @@ class ExternalAuthController extends Controller
         if (Auth::guest()) {
             if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 throw ValidationException::withMessages(
-                    ['password' => ['Wrong password']]
+                    ['login' => ['These credentials do not match our records.']]
                 );
             }
         }
