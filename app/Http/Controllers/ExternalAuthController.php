@@ -89,59 +89,70 @@ class ExternalAuthController extends Controller
     public function acceptAuthCode(Request $request, $external_service_id)
     {
         MyDebugger::log($request, "acceptAuthCode");
-        $sn = ExternalNetwork::where('string_id', $external_service_id)->firstOrFail();
-        $url = $sn->url;
-
+        $network = ExternalNetwork::where('string_id', $external_service_id)->firstOrFail();
         $client = new Client();
-        $json1 = $client->post(
-            $url.'/api/token',
+
+        $postToken = $client->post(
+            ($network->url).'/api/token',
             ['form_params' => [
                 'service_id' => 'niework',
-                'auth_code' => $request->auth_code
+                'auth_code' => $request->auth_code,
                 ]
             ]
-        )->getBody();
-        $response = json_decode($json1);
+        );
+        $responseToken = json_decode($postToken->getBody());
 
-        if ($response->status == 'ok') {
-            $client = new Client();
-            $json2 = $client->get(
-                $url.'/api/profile/'.$response->user_id,
+        if ($responseToken->status == 'ok') {
+            $getProfile = $client->get(
+                ($network->url).'/api/profile/'.$responseToken->user_id,
                 ['query' => [
                     'service_id' => 'niework',
-                    'token' => $response->token
+                    'token' => $responseToken->token,
                     ]
-                ])->getBody();
-            $response2 = json_decode($json2);
+                ]
+            );
+            $responseProfile = json_decode($getProfile->getBody());
 
-            if ($response2->status == 'ok') {
-                if (ExternalAuth::where('external_user_id', $response->user_id)->exists()){
-                    $user = ExternalAuth::where('external_user_id', $response->user_id)->firstOrFail()->user;
+            if ($responseProfile->status == 'ok') {
+                if (ExternalAuth::where('external_user_id', $responseToken->user_id)->exists()){
+                    $user = ExternalAuth::where('external_user_id', $responseToken->user_id)->firstOrFail()->user;
                 }
                 else{
-                    if (User::where('email', $response2->email)->exists())
-                        return 'email already exists';
+                    if (User::where('email', $responseProfile->email)->exists()) {
+                        throw ValidationException::withMessages(
+                            ['email' => ['These email is already in use.']]
+                        );
+                    }
+
                     $user = User::create([
-                        'name' => $response2->login,
-                        'email' => $response2->email,
+                        'name' => $responseProfile->login,
+                        'email' => $responseProfile->email,
                         'password' => Hash::make('password'),
                     ]);
+
                     ExternalAuth::create([
-                        'token' => $response->token,
-                        'service_id' => $sn->id,
+                        'token' => $responseToken->token,
+                        'service_id' => $network->id,
                         'user_id' => $user->id,
-                        'external_user_id' => $response->user_id
+                        'external_user_id' => $responseToken->user_id
                     ]);
                 }
             }
             else{
-                dd('error');
+                throw ValidationException::withMessages(
+                    ['email' => ["Couldn't get profile information"]]
+                );
+//                return "Couldn't get profile information"
+//                return back()->withErrors[""];
             }
         }
         else{
-            dd('error');
+            throw ValidationException::withMessages(
+                ['email' => ["Couldn't get token"]]
+            );
+//            return "Couldn't get profile information"
         }
-        Auth::login($user, true);
+        Auth::login($user);
         return redirect('profile/'.$user->id);
     }
 }
