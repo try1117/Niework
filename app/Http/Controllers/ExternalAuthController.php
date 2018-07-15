@@ -104,24 +104,38 @@ class ExternalAuthController extends Controller
         return response()->json(['status' => 'error']);
     }
 
-    public function acceptAuthCode(Request $request, $external_id)
+    public function acceptAuthCode(Request $request, $external_service_id)
     {
         error_log("\n\n\nacceptAuthCode\n\n\n");
         error_log($request);
         error_log("\n\n\n");
 
-        $sc = ExternalNetwork::where('string_id', $external_id)->firstOrFail();
-        $url = $sc->url;
+        $sn = ExternalNetwork::where('string_id', $external_service_id)->firstOrFail();
+        $url = $sn->url;
+
         $client = new Client();
-        $json1 = $client->post($url.'/api/token',
-            ['form_params' => ['service_id' => 'niework', 'auth_code' => $request->input('auth_code')]])->getBody();
+        $json1 = $client->post(
+            $url.'/api/token',
+            ['form_params' => [
+                'service_id' => 'niework',
+                'auth_code' => $request->auth_code
+                ]
+            ]
+        )->getBody();
         $response = json_decode($json1);
-        if ($response->status == 'ok'){
+
+        if ($response->status == 'ok') {
             $client = new Client();
-            $json2 = $client->get($url.'/api/profile/'.$response->user_id, ['query' => ['service_id' => 'niework',
-                'token' => $response->token]])->getBody();
+            $json2 = $client->get(
+                $url.'/api/profile/'.$response->user_id,
+                ['query' => [
+                    'service_id' => 'niework',
+                    'token' => $response->token
+                    ]
+                ])->getBody();
             $response2 = json_decode($json2);
-            if ($response2->status == 'ok'){
+
+            if ($response2->status == 'ok') {
                 if (ExternalAuth::where('external_user_id', $response->user_id)->exists()){
                     $user = ExternalAuth::where('external_user_id', $response->user_id)->firstOrFail()->user;
                 }
@@ -131,11 +145,11 @@ class ExternalAuthController extends Controller
                     $user = User::create([
                         'name' => $response2->login,
                         'email' => $response2->email,
-                        'password' => Hash::make('external'),
+                        'password' => Hash::make('password'),
                     ]);
                     ExternalAuth::create([
                         'token' => $response->token,
-                        'service_id' => $sc->id,
+                        'service_id' => $sn->id,
                         'user_id' => $user->id,
                         'external_user_id' => $response->user_id
                     ]);
