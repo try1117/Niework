@@ -19,12 +19,5 @@ class HomeController extends Controller
             return view('login');
         }
         return redirect('profile/'.Auth::user()->id);
-
-//        $posts = Post::all();
-//        return view('profile', [
-//            'posts' => $posts,
-//            'user' => Auth::user()
-//        ]);
-//        return view('profile')->withUser(Auth::user());
     }
 }

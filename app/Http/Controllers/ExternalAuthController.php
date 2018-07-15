@@ -11,7 +11,8 @@ use ExternalNetwork;
 use GuzzleHttp\Client;
 use Niework\User;
 use Illuminate\Support\Facades\Hash;
-use \Illuminate\Validation\ValidationException;
+use Illuminate\Validation\ValidationException;
+use Niework\Http\Middleware\MyDebugger;
 
 class ExternalAuthController extends Controller
 {
@@ -33,17 +34,8 @@ class ExternalAuthController extends Controller
             }
         }
 
-        error_log("\n\n\nredirectBack\n\n\n");
-        error_log($request);
-        error_log("\n\n\n");
-
-        error_log("\n\n\nAuth SUCCESS\n\n\n");
-        error_log(json_encode(['email' => $request->email, 'password' => $request->password]));
-        error_log("\n\n\n");
-
-        error_log("\n\n\nUser->id\n\n\n");
-        error_log(json_encode(['user_id' => Auth::user()->id]));
-        error_log("\n\n\n");
+        MyDebugger::log($request, "redirectBack");
+        MyDebugger::log(json_encode(['email' => $request->email, 'user_id' => Auth::user()->id]), "Auth SUCCESS");
 
         $auth_code = str_random(60);
         ExternalAuthCode::create([
@@ -61,11 +53,7 @@ class ExternalAuthController extends Controller
         if ($auth_code) {
             $user = $auth_code->user;
             $token = str_random(60);
-
-            error_log("\n\n\nreturnToken\n\n\n");
-            error_log($request);
-            error_log("\n\n\n");
-
+            MyDebugger::log($request, "returnToken");
 
             ExternalToken::create([
                 'user_id' => $user->id,
@@ -84,14 +72,8 @@ class ExternalAuthController extends Controller
     public function getProfile(Request $request)
     {
         $token = ExternalToken::where('service_id', $request->service_id)->where('token', $request->token)->first();
-
-        error_log("\n\n\ngetProfile\n\n\n");
-        error_log($request);
-        error_log("\n\n\n");
-
-        error_log("\n\n\ngetProfile.token\n\n\n");
-        error_log($token);
-        error_log("\n\n\n");
+        MyDebugger::log($request, "getProfile");
+        MyDebugger::log($token, "getProfile.token");
 
         if ($token) {
             $user = $token->user;
@@ -106,10 +88,7 @@ class ExternalAuthController extends Controller
 
     public function acceptAuthCode(Request $request, $external_service_id)
     {
-        error_log("\n\n\nacceptAuthCode\n\n\n");
-        error_log($request);
-        error_log("\n\n\n");
-
+        MyDebugger::log($request, "acceptAuthCode");
         $sn = ExternalNetwork::where('string_id', $external_service_id)->firstOrFail();
         $url = $sn->url;
 

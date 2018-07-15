@@ -222,6 +222,6 @@ return [
         'ExternalAuth' => Niework\Models\ExternalAuth::class,
         'ExternalAuthCode' => Niework\Models\ExternalAuthCode::class,
         'ExternalToken' => Niework\Models\ExternalToken::class,
+        'MyDebugger' => Niework\Http\Middleware\MyDebugger::class,
     ],
-
 ];
