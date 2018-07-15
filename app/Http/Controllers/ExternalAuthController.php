@@ -163,6 +163,6 @@ class ExternalAuthController extends Controller
             dd('error');
         }
         Auth::login($user, true);
-        return redirect()->route('profile/'.$user->id);
+        return redirect('profile/'.$user->id);
     }
 }
