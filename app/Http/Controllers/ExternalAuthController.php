@@ -11,6 +11,7 @@ use ExternalNetwork;
 use GuzzleHttp\Client;
 use Niework\User;
 use Illuminate\Support\Facades\Hash;
+use \Illuminate\Validation\ValidationException;
 
 class ExternalAuthController extends Controller
 {
@@ -26,7 +27,9 @@ class ExternalAuthController extends Controller
     {
         if (Auth::guest()) {
             if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                return "Authentication error";
+                throw ValidationException::withMessages(
+                    ['password' => ['Wrong password']]
+                );
             }
         }
 
@@ -36,7 +39,7 @@ class ExternalAuthController extends Controller
 
         $auth_code = str_random(60);
         ExternalAuthCode::create([
-            'user_id' => Auth::user()->getId(),
+            'user_id' => Auth::user()->id,
             'service_id' => $request->service_id,
             'auth_code' => $auth_code,
         ]);

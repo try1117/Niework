@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Authorization') }}</div>
 
                     <h3 class="text-center mt-4">Grant access to
-                        <a href={{ $redirect_url }}>
+                        <a href={{ parse_url($redirect_url)["scheme"]."://".parse_url($redirect_url)["host"] }}>
                             @if (ExternalNetwork::all()->where('string_id', $service_id)->first())
                                 {{ ExternalNetwork::all()->where('string_id', $service_id)->first()->caption }}
                             @else
@@ -24,8 +24,8 @@
                             {{ Form::hidden('service_id', $service_id) }}
                             {{ Form::hidden('redirect_url', $redirect_url) }}
 
-                            <label>{{$service_id}}</label>
-                            <label>{{$redirect_url}}</label>
+                            {{--<label>{{$service_id}}</label>--}}
+                            {{--<label>{{$redirect_url}}</label>--}}
 
                             <div class="form-group row">
                                 <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
