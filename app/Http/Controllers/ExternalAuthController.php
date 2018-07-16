@@ -142,15 +142,12 @@ class ExternalAuthController extends Controller
                 throw ValidationException::withMessages(
                     ['email' => ["Couldn't get profile information"]]
                 );
-//                return "Couldn't get profile information"
-//                return back()->withErrors[""];
             }
         }
         else{
             throw ValidationException::withMessages(
                 ['email' => ["Couldn't get token"]]
             );
-//            return "Couldn't get profile information"
         }
         Auth::login($user);
         return redirect('profile/'.$user->id);
